@@ -1,0 +1,10 @@
+langchain_openai
+langchain_core
+langchain 
+langchain_groq
+langgraph 
+openai 
+pandas 
+pydantic 
+numpy
+dotenv
