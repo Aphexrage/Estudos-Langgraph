@@ -60,7 +60,7 @@ def verificar(state: State):
     return state["satisfacao"]
 
 # Grafos:
-# Aqui estamos criando uma instancia graph que recebe os atributos da classe State que criamos
+# Aqui estamos criando uma instancia graph que recebe os atributos da classe State que eu fiz
 # A class StateGraph serve para montar o fluxo
 graph = StateGraph(State)
 
@@ -93,4 +93,5 @@ graph.add_conditional_edges(
 # Execucao
 app = graph.compile()
 fluxo = {"pergunta": "", "resposta": "", "satisfacao": ""}
+
 app.invoke(fluxo)
