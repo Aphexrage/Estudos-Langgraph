@@ -46,6 +46,14 @@ def responder(state: State):
     enviar = state["resposta"] = resposta.content
     return state
 
+# Quando o usuario dizer não, essa função deve pegar a resposta
+# anterior e melhorar e mandar pro user novamente
+def melhorarResposta(state: State):
+
+    perguntaUser = state["pergunta"]
+    melhoriaReposta = f"O usuario acrita que sua resposta precisa de melhorias {perguntaUser}"
+    return state
+
 # Pega a avalicao do user e torna o state["satisfacao"] 
 # para que a condicao seja possivel
 def avaliar(state: State):
@@ -70,14 +78,15 @@ graph.add_node("perguntar", perguntar)
 graph.add_node("responder", responder)
 graph.add_node("avaliar", avaliar)
 
+# Adicionando um nó de melhoria
+graph.add_node("melhoria", melhorarResposta)
+
 # Aqui estou definindo qual grafo será executado primeiro
 graph.set_entry_point("perguntar")
 
 # Aqui estou basicamente criando uma adge entre dois nós (funcs) 
 # Ou seja, quando perguntar retornar, responder sera ativada e 
-# quando responder finalizar, avaliar sera ativada
-graph.add_edge("perguntar", "responder")
-graph.add_edge("responder", "avaliar")
+
 
 # Aqui estou criando uma condicional de execucao de grafos 
 # dependendo do resultado do state["satisfacao"]
@@ -86,7 +95,7 @@ graph.add_conditional_edges(
     verificar,
     {
         "sim": END,
-        "nao": "perguntar"
+        "nao": "melhoria"
     }
 )
 
